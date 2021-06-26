@@ -16,7 +16,7 @@
                 <?php endif; ?>
 
                 <div class="mb-3">
-                    <label class="form-label">Username</label>
+                    <label class="form-label">Usernamemu</label>
                     <input type="text" name="username" class="form-control" placeholder="Enter username">
                 </div>
                 <div class="mb-2">
