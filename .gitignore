@@ -18,7 +18,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 # add
 /application/config/
-/assets/
+/assets/myaudio/
+/assets/qrcode/
+/assets/foto/
 
 # IDE Files
 #-------------------------

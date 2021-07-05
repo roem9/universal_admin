@@ -15,26 +15,51 @@
                             </h2>
                         </div>
                     </div>
-                    <span class="dropdown mt-3">
-                        <button class="btn btn-success dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
-                            <?= tablerIcon("file-export", "me-1")?>
-                            Export
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="<?= base_url()?>tes/export/hasil/<?= $id?>">
-                                <?= tablerIcon("report", "me-1")?>
-                                Hasil Tes
-                            </a>
-                            <a class="dropdown-item" href="<?= base_url()?>tes/export/hard/<?= $id?>">
-                                <?= tablerIcon("report", "me-1")?>
-                                Hard File
-                            </a>
-                            <a class="dropdown-item" href="<?= base_url()?>tes/export/soft/<?= $id?>">
-                                <?= tablerIcon("report", "me-1")?>
-                                Soft File
-                            </a>
+                    
+                    <div class="row">
+                        
+                        <div class="col mt-3">
+                            <span class="dropdown mt-3">
+                                <button class="btn btn-success dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                                    <?= tablerIcon("file-export", "me-1")?>
+                                    Export
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="<?= base_url()?>tes/export/hasil/<?= $id?>">
+                                        <?= tablerIcon("report", "me-1")?>
+                                        Hasil Tes
+                                    </a>
+                                    <a class="dropdown-item" href="<?= base_url()?>tes/export/hard/<?= $id?>">
+                                        <?= tablerIcon("report", "me-1")?>
+                                        Hard File
+                                    </a>
+                                    <a class="dropdown-item" href="<?= base_url()?>tes/export/soft/<?= $id?>">
+                                        <?= tablerIcon("report", "me-1")?>
+                                        Soft File
+                                    </a>
+                                </div>
+                            </span>
+
+                            <span class="dropdown mt-3">
+                                <button class="btn btn-success dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                                    <?= tablerIcon("eye", "me-1")?>
+                                    View
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="<?= base_url()?>tes/list_hard/<?= $id?>" target="_blank">
+                                        <?= tablerIcon("report", "me-1")?>
+                                        Hard File
+                                    </a>
+                                    <a class="dropdown-item" href="<?= base_url()?>tes/list_soft/<?= $id?>" target="_blank">
+                                        <?= tablerIcon("report", "me-1")?>
+                                        Soft File
+                                    </a>
+                                </div>
+                            </span>
                         </div>
-                    </span>
+                        
+                    </div>
+
                 </div>
             </div>
             <div class="page-body">

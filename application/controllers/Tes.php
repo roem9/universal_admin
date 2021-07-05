@@ -157,7 +157,6 @@ class Tes extends MY_Controller {
     }
 
     // excel 
-
         public function export($file, $id_tes){
             $tes = $this->tes->get_one("tes", ["md5(id_tes)" => $id_tes]);
             $soal = $this->tes->get_one("soal", ["id_soal" => $tes['id_soal']]);
@@ -280,6 +279,56 @@ class Tes extends MY_Controller {
             }
         }
     // excel 
+
+    public function list_hard($id){
+        // navbar and sidebar
+        $data['menu'] = "Tes";
+
+        // for title and header 
+        $data['title'] = "List Sertifikat Hard Copy";
+
+		$jumlah_data = COUNT($this->Main_model->get_all("peserta_toefl", ["md5(id_tes)" => $id, "sertifikat" => "Hard File"]));
+		
+		$config['base_url'] = base_url().'tes/list_hard/'.$id.'/';
+		$config['total_rows'] = $jumlah_data;
+		$config['per_page'] = 600;
+		$from = $this->uri->segment(4);
+		$this->pagination->initialize($config);
+        $respon = $this->Main_model->get_all_limit("peserta_toefl", ["md5(id_tes)" => $id, "sertifikat" => "Hard File"], "(no_doc + 0)", "", $from, $config['per_page']);
+        $data['respon'] = [];
+        foreach ($respon as $i => $respon) {
+            $data['respon'][$i] = $respon;
+            $jawaban = explode("###", $respon['text']);
+            $data['respon'][$i]['text'] = $jawaban;
+        }
+
+        $this->load->view("pages/tes/hasil-tes", $data);
+    }
+
+    public function list_soft($id){
+        // navbar and sidebar
+        $data['menu'] = "Tes";
+
+        // for title and header 
+        $data['title'] = "List Sertifikat Soft Copy";
+
+		$jumlah_data = COUNT($this->Main_model->get_all("peserta_toefl", ["md5(id_tes)" => $id, "sertifikat" => "Soft File"]));
+		
+		$config['base_url'] = base_url().'tes/list_hard/'.$id.'/';
+		$config['total_rows'] = $jumlah_data;
+		$config['per_page'] = 600;
+		$from = $this->uri->segment(4);
+		$this->pagination->initialize($config);
+        $respon = $this->Main_model->get_all_limit("peserta_toefl", ["md5(id_tes)" => $id, "sertifikat" => "Soft File"], "(no_doc + 0)", "", $from, $config['per_page']);
+        $data['respon'] = [];
+        foreach ($respon as $i => $respon) {
+            $data['respon'][$i] = $respon;
+            $jawaban = explode("###", $respon['text']);
+            $data['respon'][$i]['text'] = $jawaban;
+        }
+
+        $this->load->view("pages/tes/hasil-tes", $data);
+    }
 
     // load 
         public function loadTes(){
