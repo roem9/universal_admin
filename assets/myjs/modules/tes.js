@@ -131,12 +131,12 @@ $("#editTes .btnEdit").click(function(){
 })
 
 // menghapus tes
-$(document).on("click", ".hapusTes", function(){
+$(document).on("click", ".arsipTes", function(){
     let id_tes = $(this).data("id");
 
     Swal.fire({
         icon: 'question',
-        text: 'Yakin akan menghapus data tes ini?',
+        text: 'Yakin akan mengarsipkan data tes ini?',
         showCloseButton: true,
         showCancelButton: true,
         confirmButtonText: 'Ya',
@@ -144,7 +144,7 @@ $(document).on("click", ".hapusTes", function(){
     }).then(function (result) {
         if (result.value) {
             data = {id_tes: id_tes}
-            let result = ajax(url_base+"tes/hapus_tes", "POST", data);
+            let result = ajax(url_base+"tes/arsip_tes", "POST", data);
 
             if(result == 1){
                 loadData();
@@ -152,7 +152,7 @@ $(document).on("click", ".hapusTes", function(){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    text: 'Berhasil menghapus data tes',
+                    text: 'Berhasil mengarsipkan data tes',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -160,7 +160,43 @@ $(document).on("click", ".hapusTes", function(){
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'terjadi kesalahan, gagal menghapus data tes'
+                    text: 'terjadi kesalahan, gagal mengarsipkan data tes'
+                })
+            }
+        }
+    })
+})
+
+$(document).on("click", ".bukaArsipTes", function(){
+    let id_tes = $(this).data("id");
+
+    Swal.fire({
+        icon: 'question',
+        text: 'Yakin akan membuka arsip data tes ini?',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+    }).then(function (result) {
+        if (result.value) {
+            data = {id_tes: id_tes}
+            let result = ajax(url_base+"tes/buka_arsip_tes", "POST", data);
+
+            if(result == 1){
+                loadData();
+
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    text: 'Berhasil membuka arsip data tes',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'terjadi kesalahan, gagal membuka arsip data tes'
                 })
             }
         }

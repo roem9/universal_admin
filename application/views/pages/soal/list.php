@@ -66,7 +66,7 @@
     ?>
 
     <script>
-        $("#Soal").addClass("active bg-blue-lt")
+        $("#Soal").addClass("active")
     </script>
 
     <!-- load javascript -->

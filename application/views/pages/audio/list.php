@@ -62,7 +62,7 @@
     ?>
 
     <script>
-        $("#Audio").addClass("active bg-blue-lt")
+        $("#Audio").addClass("active")
     </script>
 
     <!-- load javascript -->

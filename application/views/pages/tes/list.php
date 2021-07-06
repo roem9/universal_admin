@@ -69,7 +69,8 @@
     ?>
 
     <script>
-        $("#Tes").addClass("active bg-blue-lt")
+        $("#Tes").addClass("active")
+        $("#<?= $dropdown?>").addClass("active")
     </script>
 
     <!-- load javascript -->

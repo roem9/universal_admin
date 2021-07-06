@@ -18,9 +18,43 @@ class Tes extends MY_Controller {
     public function index(){
         // navbar and sidebar
         $data['menu'] = "Tes";
+        $data['dropdown'] = "listTes";
 
         // for title and header 
         $data['title'] = "List Tes";
+
+        // for modal 
+        $data['modal'] = [
+            "modal_tes",
+            "modal_setting"
+        ];
+        
+        // javascript 
+        $data['js'] = [
+            "ajax.js",
+            "function.js",
+            "helper.js",
+            "modules/setting.js",
+            "load_data/tes_reload.js",
+            "modules/tes.js",
+        ];
+
+        $listSoal = $this->Main_model->get_all("soal", ["hapus" => 0], "nama_soal");
+        foreach ($listSoal as $i => $list) {
+            $data['listSoal'][$i] = $list;
+            $data['listSoal'][$i]['soal'] = jum_soal($list['id_soal']);
+        }
+
+        $this->load->view("pages/tes/list", $data);
+    }
+
+    public function arsip(){
+        // navbar and sidebar
+        $data['menu'] = "Tes";
+        $data['dropdown'] = "arsipTes";
+
+        // for title and header 
+        $data['title'] = "List Arsip Tes";
 
         // for modal 
         $data['modal'] = [
@@ -331,9 +365,9 @@ class Tes extends MY_Controller {
     }
 
     // load 
-        public function loadTes(){
+        public function loadTes($status = ""){
             header('Content-Type: application/json');
-            $output = $this->tes->loadTes();
+            $output = $this->tes->loadTes($status);
             echo $output;
         }
 
@@ -412,8 +446,13 @@ class Tes extends MY_Controller {
     // edit 
 
     // delete 
-        public function hapus_tes(){
-            $data = $this->tes->hapus_tes();
+        public function arsip_tes(){
+            $data = $this->tes->arsip_tes();
+            echo json_encode($data);
+        }
+
+        public function buka_arsip_tes(){
+            $data = $this->tes->buka_arsip_tes();
             echo json_encode($data);
         }
     // delete

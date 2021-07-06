@@ -1,3 +1,11 @@
+var pathArray = window.location.pathname.split("/").pop()
+
+if(pathArray == "arsip"){
+    var url = url_base+"tes/loadTes/arsip";
+} else {
+    var url = url_base+"tes/loadTes";
+}
+
 var datatable = $('#dataTable').DataTable({ 
     initComplete: function() {
         var api = this.api();
@@ -12,7 +20,7 @@ var datatable = $('#dataTable').DataTable({
     },
     processing: true,
     serverSide: true,
-    ajax: {"url": url_base+"tes/loadTes", "type": "POST"},
+    ajax: {"url": url, "type": "POST"},
     columns: [
         {"data": "nama_tes"},
         {"data": "tgl_tes"},

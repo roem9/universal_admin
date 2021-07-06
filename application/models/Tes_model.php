@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tes_model extends MY_Model {
 
-    public function loadTes(){
+    public function loadTes($status){
         $config = $this->config();
 
         $this->datatables->select("id_tes, tgl_tes, tgl_pengumuman, nama_tes, a.status, nama_soal, a.catatan, password,
@@ -13,11 +13,17 @@ class Tes_model extends MY_Model {
         ");
         $this->datatables->from("tes as a");
         $this->datatables->join("soal as b", "a.id_soal = b.id_soal");
-        $this->datatables->where("a.hapus", 0);
+
+        if($status == "arsip")
+            $this->datatables->where("a.hapus", 1);
+        else 
+            $this->datatables->where("a.hapus", 0);
 
         $this->datatables->add_column("soal", '$1', 'jum_soal(id_soal)');
         $this->datatables->add_column("peserta", '$1', 'peserta(peserta_latihan, peserta_toefl)');
-        $this->datatables->add_column('action','
+
+        if($status == "arsip")
+            $this->datatables->add_column('action','
                 <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
                         '.tablerIcon("menu-2", "me-1").'
@@ -33,12 +39,36 @@ class Tes_model extends MY_Model {
                             Hasil
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item hapusTes" href="javascript:void(0)" data-id="$1">
-                            '.tablerIcon("trash", "me-1").'
-                            Hapus
+                        <a class="dropdown-item bukaArsipTes" href="javascript:void(0)" data-id="$1">
+                            '.tablerIcon("archive", "me-1").'
+                            Buka Arsip
                         </a>
                     </div>
                 </span>', 'id_tes, md5(id_tes)');
+        else 
+            $this->datatables->add_column('action','
+                <span class="dropdown">
+                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
+                        '.tablerIcon("menu-2", "me-1").'
+                        Menu
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item editTes" href="#editTes" data-bs-toggle="modal" data-id="$1">
+                            '.tablerIcon("info-circle", "me-1").'
+                            Detail Tes
+                        </a>
+                        <a class="dropdown-item" href="'.base_url().'tes/hasil/$2" target="_blank">
+                            '.tablerIcon("award", "me-1").'
+                            Hasil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item arsipTes" href="javascript:void(0)" data-id="$1">
+                            '.tablerIcon("archive", "me-1").'
+                            Arsipkan
+                        </a>
+                    </div>
+                </span>', 'id_tes, md5(id_tes)');
+
 
             $this->datatables->add_column('link', '
                 <button class="copy btn btn-success" data-clipboard-text="'.$config[1]['value'].'/soal/id/$1">
@@ -107,10 +137,21 @@ class Tes_model extends MY_Model {
             else return 0;
         }
 
-        public function hapus_tes(){
+        public function arsip_tes(){
             $id_tes = $this->input->post("id_tes");
 
             $data = $this->edit_data("tes", ["id_tes" => $id_tes], ["hapus" => 1, "status" => "Selesai"]);
+            if($data){
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        public function buka_arsip_tes(){
+            $id_tes = $this->input->post("id_tes");
+
+            $data = $this->edit_data("tes", ["id_tes" => $id_tes], ["hapus" => 0, "status" => "Selesai"]);
             if($data){
                 return 1;
             } else {

@@ -64,7 +64,7 @@
     ?>
 
     <script>
-        $("#Subsoal").addClass("active bg-blue-lt")
+        $("#Subsoal").addClass("active")
     </script>
 
     <!-- load javascript -->
