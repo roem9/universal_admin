@@ -212,8 +212,7 @@
         <?php if($tipe == "gambar") :?>
             <pagebreak>
             <div style="position: absolute; left:0; right: 0; top: 0; bottom: 0;">
-                <img src="<?= base_url()?>assets/img/sertifikat2.jpg" 
-                    style="width: 210mm; height: 330mm; margin: 0;" />
+                <img src="<?= base_url()?>assets/img/sertifikat2.jpg" style="width: 210mm; height: 330mm; margin: 0;" />
             </div>
         <?php endif;?>
     </body>
