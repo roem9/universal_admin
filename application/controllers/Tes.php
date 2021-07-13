@@ -348,7 +348,7 @@ class Tes extends MY_Controller {
 
 		$jumlah_data = COUNT($this->Main_model->get_all("peserta_toefl", ["md5(id_tes)" => $id, "sertifikat" => "Soft File"]));
 		
-		$config['base_url'] = base_url().'tes/list_hard/'.$id.'/';
+		$config['base_url'] = base_url().'tes/list_soft/'.$id.'/';
 		$config['total_rows'] = $jumlah_data;
 		$config['per_page'] = 600;
 		$from = $this->uri->segment(4);
