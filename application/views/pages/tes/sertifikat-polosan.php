@@ -184,8 +184,10 @@
             left: 347px;
 			/*top: 355px;*/ 
 			/*top: 363px; -3*/
-			top: 360px;
-            font-size: 18px;
+			/* top: 360px; */
+			top: 364px;
+            /* font-size: 18px; */
+            font-size: 16px;
             font-family: 'rock';
             word-spacing: 3px;
         }

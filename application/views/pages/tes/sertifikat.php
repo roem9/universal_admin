@@ -137,8 +137,10 @@
             width: 129px;
 			position: absolute;
             left: 464px;
-			top: 355px;
-            font-size: 18px;
+			top: 359px;
+			/* top: 355px; */
+            /* font-size: 18px; */
+            font-size: 16px;
             font-family: 'rock';
             word-spacing: 3px;
         }
