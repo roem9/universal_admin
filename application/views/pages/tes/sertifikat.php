@@ -67,7 +67,11 @@
 			position: absolute;
             left: 330px;
 			top: 300px;
-            font-size: 32px;
+            <?php if(strlen($nama) > 30) :?>
+                font-size: 25px;
+            <?php else :?>
+                font-size: 32px;
+            <?php endif;?>
             font-family: 'rockb';
             word-spacing: 3px;
         }
