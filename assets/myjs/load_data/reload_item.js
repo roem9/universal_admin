@@ -79,6 +79,22 @@ function load_item(id){
 
                 item = `<p>`+data.nama+`</p><center><audio controls controlsList="nodownload"><source src="`+url_base+`assets/myaudio/`+data.file+`" type='audio/mpeg'></audio></center>`
 
+            } else if(data.item == "gambar"){
+
+                item = `<img src="`+url_base+`assets/myimg/`+data.data+`?t=`+Math.random()+`" onerror="this.onerror=null; this.src='`+url_base+`assets/tabler-icons-1.39.1/icons/x.svg'" class="card-img-top" width=100%>`
+
+            }
+
+            if(data.item != 'gambar'){
+                edit = `
+                <a class="dropdown-item editItem" href="#editItem" data-bs-toggle="modal" data-id="`+data.id_item+`">
+                    `+icon("me-1", "edit")+`
+                    Edit
+                </a>
+                <div class="dropdown-divider"></div>
+                `
+            } else {
+                edit = '';
             }
 
             html += `
@@ -113,11 +129,7 @@ function load_item(id){
                                 </svg>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item editItem" href="#editItem" data-bs-toggle="modal" data-id="`+data.id_item+`">
-                                    `+icon("me-1", "edit")+`
-                                    Edit
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                `+edit+`
                                 <a class="dropdown-item hapusItem" href="javascript:void(0)" data-id="`+data.id_item+`">
                                     `+icon("me-1", "trash")+`
                                     Hapus

@@ -227,9 +227,9 @@ class Soal extends MY_Controller {
                     
                     $number++;
 
-                } else if($soal['item'] == "petunjuk" || $soal['item'] == "audio"){
+                } else if($soal['item'] == "petunjuk" || $soal['item'] == "gambar"){
                     $data['sesi'][$i]['soal'][$j] = $soal;
-                } else if($soal['audio']) {
+                } else if($soal['item'] == "audio") {
                     $data['sesi'][$i]['soal'][$j] = $soal;
                     $audio = $this->Main_model->get_one("audio", ["id_audio" => $soal['data']]);
                     $data['sesi'][$i]['soal'][$j]['file'] = $audio['nama_file'];

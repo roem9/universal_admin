@@ -104,6 +104,10 @@ class Subsoal extends MY_Controller {
         }
 
         public function add_item_soal(){
+            // var_dump($_POST);
+            // var_dump($_FILES);
+            // exit();
+
             $id_sub = $this->input->post("id_sub");
             $soal = $this->Main_model->get_one("sub_soal", ["md5(id_sub)" => $id_sub]);
 
@@ -114,19 +118,91 @@ class Subsoal extends MY_Controller {
                 $urutan = 1;
             }
 
-            $data = [
-                "id_sub" => $soal['id_sub'],
-                "item" => $this->input->post("item"),
-                "data" => trim($this->input->post("data_soal")),
-                "penulisan" => $this->input->post("penulisan"),
-                "urutan" => $urutan,
-            ];
-
-            $query = $this->Main_model->add_data("item_soal", $data);
-            if($query){
-                echo json_encode(1);
+            if($_POST['item'] != "gambar"){
+                $data = [
+                    "id_sub" => $soal['id_sub'],
+                    "item" => $this->input->post("item"),
+                    "data" => trim($this->input->post("data_soal")),
+                    "penulisan" => $this->input->post("penulisan"),
+                    "urutan" => $urutan,
+                ];
+    
+                $query = $this->Main_model->add_data("item_soal", $data);
+                if($query){
+                    echo json_encode(1);
+                } else {
+                    echo json_encode(0);
+                }
             } else {
-                echo json_encode(0);
+                $data = [
+                    "id_sub" => $soal['id_sub'],
+                    "item" => $this->input->post("item"),
+                    "data" => "gambar",
+                    "penulisan" => $this->input->post("penulisan"),
+                    "urutan" => $urutan,
+                ];
+    
+                $query = $this->Main_model->add_data("item_soal", $data);
+
+                $this->upload_image($query, $_FILES);
+
+                if($query){
+                    echo json_encode(1);
+                } else {
+                    echo json_encode(0);
+                }
+            }
+
+        }
+
+        public function upload_image($id, $file){
+            if(isset($file['file']['name'])) {
+
+                $nama_file = $file['file'] ['name']; // Nama Audio
+                $size        = $file['file'] ['size'];// Size Audio
+                $error       = $file['file'] ['error'];
+                $tipe_audio  = $file['file'] ['type']; //tipe audio untuk filter
+                $folder      = "./assets/myimg/"; //folder tujuan upload
+                $valid       = array('jpg','png','gif','jpeg', 'JPG', 'PNG', 'GIF', 'JPEG'); //Format File yang di ijinkan Masuk ke server
+                
+                if(strlen($nama_file)){   
+                     // Perintah untuk mengecek format gambar
+                     list($txt, $ext) = explode(".", $nama_file);
+                     if(in_array($ext,$valid)){   
+
+                         // Perintah untuk mengupload file dan memberi nama baru
+                        switch ($tipe_audio) {
+                            case 'image/jpeg':
+                                $tipe_audio = "jpg";
+                                break;
+                            case 'image/png':
+                                $tipe_audio = "png";
+                                break;
+                            case 'image/gif':
+                                $tipe_audio = "gif";
+                                break;
+                            default:
+                                break;
+                        }
+
+                         $img_peserta = $id.".".$tipe_audio;
+
+                         $tmp = $file['file']['tmp_name'];
+                        
+                         
+                        if(move_uploaded_file($tmp, $folder.$img_peserta)){
+                            $this->Main_model->edit_data("item_soal", ["id_item" => $id], ["data" => $img_peserta]);
+                            return 1;
+                            
+                        } else { // Jika Audio Gagal Di upload 
+                            return 0;
+                        }
+                     } else{ 
+                        return 2;
+                    }
+            
+                }
+                
             }
         }
     // add 
@@ -211,6 +287,8 @@ class Subsoal extends MY_Controller {
                         $data['item'][$i]['file'] = $audio['nama_file'];
                         $data['item'][$i]['nama'] = $audio['nama_audio'];
                     }
+                } else if($soal['item'] == "gambar"){
+                    $data['item'][$i] = $soal;
                 }
             }
 
@@ -319,6 +397,10 @@ class Subsoal extends MY_Controller {
             $id_item = $this->input->post("id_item");
 
             $item = $this->Main_model->get_one("item_soal", ["id_item" => $id_item]);
+
+            if($item['item'] == "gambar"){
+                unlink('./assets/myimg/'.$item['data']);
+            }
 
             $id_sub = $item['id_sub'];
             $urutan = $item['urutan'];
