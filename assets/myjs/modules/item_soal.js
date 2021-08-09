@@ -584,7 +584,7 @@ $(document).on("click", "#addItem .btnAdd", function(){
         if(files.length > 0 ){
             Swal.fire({
                 icon: 'question',
-                text: 'Yakin akan menambahkan audio baru?',
+                text: 'Yakin akan menambahkan gambar baru?',
                 showCloseButton: true,
                 showCancelButton: true,
                 confirmButtonText: 'Ya',
