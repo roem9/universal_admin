@@ -54,6 +54,18 @@ function load_item(id){
                     item = soal+pilihan;
                 }
 
+            } else if(data.item == "soal esai"){
+                
+                if(data.penulisan == "RTL"){
+                    soal = `<div dir="rtl" class="mb-3">`+data.data.soal+`</div>`
+                    jawaban = "<p>Jawaban : "+data.data.jawaban+"</p>";
+                    item = soal+jawaban;
+                } else {
+                    soal = `<div class="mb-3">`+data.data.soal+`</div>`
+                    jawaban = "<p>Jawaban : "+data.data.jawaban+"</p>";
+                    item = soal+jawaban;
+                }
+
             } else if(data.item == "petunjuk"){
 
                 if(data.penulisan == "RTL"){

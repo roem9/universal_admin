@@ -14,6 +14,7 @@
                     <div class="form-floating mb-3">
                         <select name="tipe_soal" class="form form-control required">
                             <option value="">Pilih Tipe Soal</option>
+                            <option value="IELTS">IELTS</option>
                             <option value="TOEFL">TOEFL</option>
                             <option value="TOAFL">TOAFL</option>
                             <option value="Latihan">Latihan</option>
@@ -60,6 +61,7 @@
                 <div class="form-floating mb-3">
                     <select name="tipe_soal" class="form form-control required">
                         <option value="">Pilih Tipe Soal</option>
+                        <option value="IELTS">IELTS</option>
                         <option value="TOEFL">TOEFL</option>
                         <option value="TOAFL">TOAFL</option>
                         <option value="Latihan">Latihan</option>

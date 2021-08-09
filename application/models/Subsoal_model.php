@@ -6,7 +6,7 @@ class Subsoal_model extends MY_Model {
 
     public function loadSubSoal(){
         $this->datatables->select("id_sub, nama_sub, tgl_pembuatan, catatan, 
-        (select count(id_item) from item_soal where a.id_sub = id_sub AND item = 'soal') as soal
+        (select count(id_item) from item_soal where a.id_sub = id_sub AND (item = 'soal' OR item = 'soal esai')) as soal
         ");
         $this->datatables->from("sub_soal as a");
         $this->datatables->where("hapus", 0);

@@ -207,9 +207,9 @@
     }
 
     // jumlah peserta 
-    function peserta($peserta_latihan, $peserta_toefl){
-        if($peserta_latihan > $peserta_toefl) return $peserta_latihan;
-        else return $peserta_toefl;
+    function peserta($peserta_latihan, $peserta_toefl, $peserta_ielts){
+        $data = max($peserta_latihan, $peserta_toefl, $peserta_ielts);
+        return $data;
     }
 
     // poin setiap sesi toefl 
@@ -245,7 +245,9 @@
         foreach ($id as $i => $id) {
             $CI->db->select("id_item");
             $CI->db->from("item_soal");
-            $CI->db->where(["item" => "soal", "id_sub" => $id['id_sub']]);
+            $where = "id_sub = ". $id['id_sub'] . " AND (item = 'soal' OR item = 'soal esai')";
+            // $CI->db->where(["item" => "soal", "id_sub" => $id['id_sub']]);
+            $CI->db->where($where);
             $data = $CI->db->get()->result_array();
 
             $soal += COUNT($data);

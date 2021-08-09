@@ -100,6 +100,16 @@
                                                     <?php endforeach;?>
                                                     <?php $item = $soal.$pilihan;?>
                                                 <?php endif;?>
+                                            <?php elseif($data['item'] == "soal esai") :?>
+                                                <?php if($data['penulisan'] == "RTL") :?>
+                                                    <?php $soal = '<div dir="rtl" class="mb-3">'.$data['data']['soal'].'</div>' ?>
+                                                    <?php $jawaban = '<p>Jawaban : ' . $data['data']['jawaban'] . '</p>' ?>
+                                                    <?php $item = $soal.$jawaban;?>
+                                                <?php else :?>
+                                                    <?php $soal = '<div class="mb-3">'.$data['data']['soal'].'</div>' ?>
+                                                    <?php $jawaban = '<p>Jawaban : ' . $data['data']['jawaban'] . '</p>' ?>
+                                                    <?php $item = $soal.$jawaban;?>
+                                                <?php endif;?>
                                             <?php elseif($data['item'] == "petunjuk") :
                                                     if($data['penulisan'] == "RTL"){
                                                         $item = '<div dir="rtl" class="mb-3">'.$data['data'].'</div>';

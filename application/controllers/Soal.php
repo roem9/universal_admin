@@ -83,7 +83,7 @@ class Soal extends MY_Controller {
         $soal = $this->Main_model->get_one("soal", ["md5(id_soal)" => $id_soal]);
         $sesi = $this->Main_model->get_all("sesi_soal", ["id_soal" => $soal['id_soal']]);
 
-        if($soal['tipe_soal'] == "TOAFL" || $soal['tipe_soal'] == "TOEFL"){
+        if($soal['tipe_soal'] == "TOAFL" || $soal['tipe_soal'] == "TOEFL" ||  $soal['tipe_soal'] == "IELTS"){
             $data['table'] = "peserta_toefl";
             $data['form'] = [
                 [
@@ -199,6 +199,29 @@ class Soal extends MY_Controller {
                     $data['sesi'][$i]['soal'][$j]['item'] = $soal['item'];
                     $data['sesi'][$i]['soal'][$j]['data']['soal'] = $txt_soal['soal'];
                     $data['sesi'][$i]['soal'][$j]['data']['pilihan'] = $txt_soal['pilihan'];
+                    $data['sesi'][$i]['soal'][$j]['data']['jawaban'] = $txt_soal['jawaban'];
+                    $data['sesi'][$i]['soal'][$j]['penulisan'] = $soal['penulisan'];
+                    
+                    $number++;
+
+                } else if($soal['item'] == "soal esai"){
+                    // from json to array 
+                    // $txt_soal = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $soal['data']), true );
+                    $string = trim(preg_replace('/\s+/', ' ', $soal['data']));
+                    // $txt_soal = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $soal['data']), true );
+                    $txt_soal = json_decode($string, true );
+                    
+                    if($soal['penulisan'] == "RTL"){
+                        $no = $this->Other_model->angka_arab($number).". ";
+                        $txt_soal['soal'] = str_replace("{no}", $no, $txt_soal['soal']);
+                    } else {
+                        $no = $number.". ";
+                        $txt_soal['soal'] = str_replace("{no}", $no, $txt_soal['soal']);
+                    }
+
+                    $data['sesi'][$i]['soal'][$j]['id_item'] = $soal['id_item'];
+                    $data['sesi'][$i]['soal'][$j]['item'] = $soal['item'];
+                    $data['sesi'][$i]['soal'][$j]['data']['soal'] = $txt_soal['soal'];
                     $data['sesi'][$i]['soal'][$j]['data']['jawaban'] = $txt_soal['jawaban'];
                     $data['sesi'][$i]['soal'][$j]['penulisan'] = $soal['penulisan'];
                     

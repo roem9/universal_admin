@@ -111,6 +111,8 @@ class Tes extends MY_Controller {
 
         if($soal['tipe_soal'] == "TOAFL" || $soal['tipe_soal'] == "TOEFL"){
             $this->load->view("pages/tes/list-hasil-toefl", $data);
+        } else if($soal['tipe_soal'] == "IELTS"){
+            $this->load->view("pages/tes/list-hasil-ielts", $data);
         } else {
             $this->load->view("pages/tes/list-hasil-latihan", $data);
         }
@@ -263,6 +265,60 @@ class Tes extends MY_Controller {
                                         ->setCellValue('L' . $kolom, $peserta['nilai_reading'])
                                         ->setCellValue('M' . $kolom, poin("Reading", $peserta['nilai_reading']))
                                         ->setCellValue('N' . $kolom, skor($peserta['nilai_listening'], $peserta['nilai_structure'], $peserta['nilai_reading']));
+            
+                            $kolom++;
+                            $nomor++;
+            
+                    }
+                    $writer = new Xlsx($spreadsheet);
+        
+                    header('Content-Type: application/vnd.ms-excel');
+                    header('Content-Disposition: attachment;filename="'.$tes['nama_tes'].'_'.$file_data.'.xlsx"');
+                    header('Cache-Control: max-age=0');
+        
+                    $writer->save('php://output');
+                } else if($soal['tipe_soal'] == "IELTS"){
+
+                    if($file == "hasil"){
+                        $semua_peserta = $this->tes->get_all("peserta_ielts", ["id_tes" => $tes['id_tes']]);
+                        $file_data = "Hasil Keseluruhan";
+                    } else if($file == "hard"){
+                        $semua_peserta = $this->tes->get_all("peserta_ielts", ["id_tes" => $tes['id_tes'], "sertifikat" => "Hard File"], "(no_doc + 0)");
+                        $file_data = "Sertifikat Hard File";
+                    } else if($file == "soft"){
+                        $semua_peserta = $this->tes->get_all("peserta_ielts", ["id_tes" => $tes['id_tes'], "sertifikat" => "Soft File"], "(no_doc + 0)");
+                        $file_data = "Sertifikat Soft File";
+                    }
+        
+                    $spreadsheet->setActiveSheetIndex(0)
+                                ->setCellValue('A1', 'LIST PESERTA ' . $tes['nama_tes'] . ' (' . $file_data . ')')
+                                ->setCellValue('A2', 'No')
+                                ->setCellValue('B2', 'Nama')
+                                ->setCellValue('C2', 'TTL')
+                                ->setCellValue('D2', 'Alamat')
+                                ->setCellValue('E2', 'Alamat Pengiriman')
+                                ->setCellValue('F2', 'No. WA')
+                                ->setCellValue('G2', 'email')
+                                ->setCellValue('H2', 'Nilai Listening')
+                                ->setCellValue('I2', 'Nilai Reading');
+    
+                    $spreadsheet->getActiveSheet()
+                                ->mergeCells('A1:I1');
+                    
+                    $kolom = 4;
+                    $nomor = 1;
+                    foreach($semua_peserta as $peserta) {
+            
+                            $spreadsheet->setActiveSheetIndex(0)
+                                        ->setCellValue('A' . $kolom, $nomor)
+                                        ->setCellValue('B' . $kolom, $peserta['nama'])
+                                        ->setCellValue('C' . $kolom, $peserta['t4_lahir'] . ", " . tgl_indo($peserta['tgl_lahir']))
+                                        ->setCellValue('D' . $kolom, $peserta['alamat'])
+                                        ->setCellValue('E' . $kolom, $peserta['alamat_pengiriman'])
+                                        ->setCellValue('F' . $kolom, $peserta['no_wa'])
+                                        ->setCellValue('G' . $kolom, $peserta['email'])
+                                        ->setCellValue('H' . $kolom, $peserta['nilai_listening'])
+                                        ->setCellValue('I' . $kolom, $peserta['nilai_reading']);
             
                             $kolom++;
                             $nomor++;

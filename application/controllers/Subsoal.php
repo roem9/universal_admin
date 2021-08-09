@@ -177,6 +177,33 @@ class Subsoal extends MY_Controller {
                     
                     $j++;
 
+                } else if($soal['item'] == "soal esai"){
+
+                    // from json to array 
+                    // var_dump($soal);
+                    $string = trim(preg_replace('/\s+/', ' ', $soal['data']));
+                    // $txt_soal = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $soal['data']), true );
+                    $txt_soal = json_decode($string, true );
+                    
+                    
+                    // var_dump($txt_soal);
+
+                    if($soal['penulisan'] == "RTL"){
+                        $no = $this->Other_model->angka_arab($j).". ";
+                        $tes['soal'] = str_replace("{no}", $no, $txt_soal['soal']);
+                    } else {
+                        $no = $j.". ";
+                        $tes['soal'] = str_replace("{no}", $no, $txt_soal['soal']);
+                    }
+
+                    $data['item'][$i]['id_item'] = $soal['id_item'];
+                    $data['item'][$i]['item'] = $soal['item'];
+                    $data['item'][$i]['data']['soal'] = $tes['soal'];
+                    $data['item'][$i]['data']['jawaban'] = $txt_soal['jawaban'];
+                    $data['item'][$i]['penulisan'] = $soal['penulisan'];
+                    
+                    $j++;
+
                 } else if($soal['item'] == "petunjuk" || $soal['item'] == "audio"){
                     $data['item'][$i] = $soal;
                     if($soal['item'] == "audio"){
@@ -212,6 +239,18 @@ class Subsoal extends MY_Controller {
                 // $data['pilihan_b'] = $pilihan[1];
                 // $data['pilihan_c'] = $pilihan[2];
                 $data['pilihan'] = $item['pilihan'];
+                $data['jawaban'] = $item['jawaban'];
+            } else if($item['item'] == "soal esai"){
+                $data = $item;
+
+                // $item = explode("###", $item['data']);
+                // from json to array 
+                $string = trim(preg_replace('/\s+/', ' ', $item['data']));
+                // $txt_soal = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $soal['data']), true );
+                $item = json_decode($string, true );
+                // $item = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $item['data']), true );
+
+                $data['soal'] = $item['soal'];
                 $data['jawaban'] = $item['jawaban'];
             } else if($item['item'] == "petunjuk" || $item['item'] == "audio"){
                 $data = $item;

@@ -9,7 +9,8 @@ class Tes_model extends MY_Model {
 
         $this->datatables->select("id_tes, tgl_tes, tgl_pengumuman, nama_tes, a.status, nama_soal, a.catatan, password,
             (select count(id) from peserta where a.id_tes = id_tes) as peserta_latihan,
-            (select count(id) from peserta_toefl where a.id_tes = id_tes) as peserta_toefl, a.id_soal
+            (select count(id) from peserta_toefl where a.id_tes = id_tes) as peserta_toefl,
+            (select count(id) from peserta_ielts where a.id_tes = id_tes) as peserta_ielts, a.id_soal
         ");
         $this->datatables->from("tes as a");
         $this->datatables->join("soal as b", "a.id_soal = b.id_soal");
@@ -20,7 +21,7 @@ class Tes_model extends MY_Model {
             $this->datatables->where("a.hapus", 0);
 
         $this->datatables->add_column("soal", '$1', 'jum_soal(id_soal)');
-        $this->datatables->add_column("peserta", '$1', 'peserta(peserta_latihan, peserta_toefl)');
+        $this->datatables->add_column("peserta", '$1', 'peserta(peserta_latihan, peserta_toefl, peserta_ielts)');
 
         if($status == "arsip")
             $this->datatables->add_column('action','
@@ -99,6 +100,10 @@ class Tes_model extends MY_Model {
                 <a href="'.base_url().'tes/sertifikat/gambar/$1" target="_blank" class="btn btn-info">'.tablerIcon("award", "me-1").'</a>
             ', 'md5(id)');
             $this->datatables->add_column('skor', '$1', 'skor(nilai_listening, nilai_structure, nilai_reading)');
+        } else if($tipe == "IELTS"){
+            $this->datatables->select("id, id_tes, nama, email, nilai_listening, nilai_reading");
+            $this->datatables->from("peserta_ielts");
+            $this->datatables->where("md5(id_tes)", $id);
         } else {
             $this->datatables->select("id, id_tes, nama, email, nilai");
             $this->datatables->from("peserta");
