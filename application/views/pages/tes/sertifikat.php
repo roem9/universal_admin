@@ -66,10 +66,14 @@
             width: 700px;
 			position: absolute;
             left: 330px;
-			top: 300px;
-            <?php if(strlen($nama) > 30) :?>
+            <?php if(strlen($nama) > 60) :?>
+			    top: 275px;
+                font-size: 25px;
+            <?php elseif(strlen($nama) > 30) :?>
+                top: 300px;
                 font-size: 25px;
             <?php else :?>
+			    top: 300px;
                 font-size: 32px;
             <?php endif;?>
             font-family: 'rockb';
