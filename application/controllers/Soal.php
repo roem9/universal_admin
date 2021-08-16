@@ -176,7 +176,7 @@ class Soal extends MY_Controller {
 
         $data['soal'] = $soal;
         foreach ($sesi as $i => $sesi) {
-            $sub_soal = $this->Main_model->get_all("item_soal", ["id_sub" => $sesi['id_sub']]);
+            $sub_soal = $this->Main_model->get_all("item_soal", ["id_sub" => $sesi['id_sub']], 'urutan');
             $data['sesi'][$i] = [];
             $number = 1;
             foreach ($sub_soal as $j => $soal) {
