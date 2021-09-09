@@ -356,6 +356,7 @@ $(document).on("click", "#addItem .btnAdd", function(){
                 let id_sub = $(form+" input[name='id_sub']").val();
                 let tipe_soal = $(form+" input[name='tipe_soal']").val();
                 let soal = CKEDITOR.instances['form-text'].getData();
+                soal = soal.replace(/"/g, "'");
                 let pilihan = "";
 
                 $(form+" [name='pilihan[]']").each(function(){
@@ -424,6 +425,7 @@ $(document).on("click", "#addItem .btnAdd", function(){
                 let id_sub = $(form+" input[name='id_sub']").val();
                 let tipe_soal = $(form+" input[name='tipe_soal']").val();
                 let soal = CKEDITOR.instances['form-text'].getData();
+                soal = soal.replace(/"/g, "'");
 
                 let jawaban = $(form+" textarea[name='jawaban']").val();
                 let penulisan = $(form+" select[name='penulisan']").val();
@@ -482,6 +484,7 @@ $(document).on("click", "#addItem .btnAdd", function(){
                 let id_sub = $(form+" input[name='id_sub']").val();
                 let tipe_soal = $(form+" input[name='tipe_soal']").val();
                 let soal = CKEDITOR.instances['form-text'].getData();
+                soal = soal.replace(/"/g, "'");
                 let penulisan = $(form+" select[name='penulisan']").val();
     
                 let eror = required(form);
@@ -909,6 +912,7 @@ $(document).on("click", "#editItem .btnEdit", function(){
     
                 let id_item = $(form+" input[name='id_item']").val();
                 let soal = CKEDITOR.instances['form-text-edit'].getData();
+                soal = soal.replace(/"/g, "'");
                 
                 let pilihan = "";
                 $(form+" [name='pilihan[]']").each(function(){
@@ -974,6 +978,7 @@ $(document).on("click", "#editItem .btnEdit", function(){
     
                 let id_item = $(form+" input[name='id_item']").val();
                 let soal = CKEDITOR.instances['form-text-edit'].getData();
+                soal = soal.replace(/"/g, "'");
 
                 let jawaban = $(form+" textarea[name='jawaban']").val();
                 let penulisan = $(form+" select[name='penulisan']").val();
@@ -1031,6 +1036,7 @@ $(document).on("click", "#editItem .btnEdit", function(){
     
                 let id_item = $(form+" input[name='id_item']").val();
                 let soal = CKEDITOR.instances['form-text-edit'].getData();
+                soal = soal.replace(/"/g, "'");
                 let penulisan = $(form+" select[name='penulisan']").val();
     
                 let eror = required(form);
