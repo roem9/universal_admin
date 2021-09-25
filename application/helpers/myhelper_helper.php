@@ -213,17 +213,17 @@
     }
 
     // poin setiap sesi toefl 
-    function poin($tipe, $soal){
+    function poin($tipe, $soal, $versi){
         $CI =& get_instance();
         $CI->db->from("nilai_toefl");
-        $CI->db->where(["tipe" => $tipe, "soal" => $soal]);
+        $CI->db->where(["tipe" => $tipe, "soal" => $soal, "versi" => $versi]);
         $data = $CI->db->get()->row_array();
         return $data['poin'];
     }
 
     // skor toefl 
-    function skor($nilai_listening, $nilai_structure, $nilai_reading){
-        return round(((poin("Listening", $nilai_listening) + poin("Structure", $nilai_structure) + poin("Reading", $nilai_reading)) * 10) / 3);
+    function skor($nilai_listening, $nilai_structure, $nilai_reading, $versi){
+        return round(((poin("Listening", $nilai_listening, $versi) + poin("Structure", $nilai_structure, $versi) + poin("Reading", $nilai_reading, $versi)) * 10) / 3);
     }
 
     // menghitung skor latihan biasa 

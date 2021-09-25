@@ -87,19 +87,19 @@ class Tes_model extends MY_Model {
         $config = $this->config();
 
         if($tipe == "TOAFL" || $tipe == "TOEFL"){
-            $this->datatables->select("id, id_tes, nama, t4_lahir, tgl_lahir, alamat, alamat_pengiriman, no_wa, email, nilai_listening, nilai_structure, nilai_reading, sertifikat, file");
+            $this->datatables->select("id, id_tes, nama, t4_lahir, tgl_lahir, alamat, alamat_pengiriman, no_wa, email, nilai_listening, nilai_structure, nilai_reading, sertifikat, file, versi");
             $this->datatables->from("peserta_toefl");
             $this->datatables->where("md5(id_tes)", $id);
-            $this->datatables->edit_column("nilai_listening", '$1', 'poin("Listening", nilai_listening)');
-            $this->datatables->edit_column("nilai_structure", '$1', 'poin("Structure", nilai_structure)');
-            $this->datatables->edit_column("nilai_reading", '$1', 'poin("Reading", nilai_reading)');
+            $this->datatables->edit_column("nilai_listening", '$1', 'poin("Listening", nilai_listening, versi)');
+            $this->datatables->edit_column("nilai_structure", '$1', 'poin("Structure", nilai_structure, versi)');
+            $this->datatables->edit_column("nilai_reading", '$1', 'poin("Reading", nilai_reading, versi)');
             $this->datatables->add_column('polosan', '
                 <a href="'.base_url().'tes/sertifikat/polosan/$1" target="_blank" class="btn btn-info">'.tablerIcon("award", "me-1").'</a>
             ', 'md5(id)');
             $this->datatables->add_column('full', '
                 <a href="'.base_url().'tes/sertifikat/gambar/$1" target="_blank" class="btn btn-info">'.tablerIcon("award", "me-1").'</a>
             ', 'md5(id)');
-            $this->datatables->add_column('skor', '$1', 'skor(nilai_listening, nilai_structure, nilai_reading)');
+            $this->datatables->add_column('skor', '$1', 'skor(nilai_listening, nilai_structure, nilai_reading, versi)');
         } else if($tipe == "IELTS"){
             $this->datatables->select("id, id_tes, nama, email, nilai_listening, nilai_reading");
             $this->datatables->from("peserta_ielts");

@@ -89,11 +89,11 @@ class Home extends MY_Controller {
 
     public function get_poin($tipe){
         if($tipe == "listening"){
-            $data = $this->Main_model->get_all("nilai_toefl", ["tipe" => "Listening"], "soal");
+            $data = $this->Main_model->get_all("nilai_toefl", ["versi" => "New", "tipe" => "Listening"], "soal");
         } else if($tipe == "structure"){
-            $data = $this->Main_model->get_all("nilai_toefl", ["tipe" => "Structure"], "soal");
+            $data = $this->Main_model->get_all("nilai_toefl", ["versi" => "New", "tipe" => "Structure"], "soal");
         } else if($tipe == "reading"){
-            $data = $this->Main_model->get_all("nilai_toefl", ["tipe" => "Reading"], "soal");
+            $data = $this->Main_model->get_all("nilai_toefl", ["versi" => "New", "tipe" => "Reading"], "soal");
         }
 
         echo json_encode($data);

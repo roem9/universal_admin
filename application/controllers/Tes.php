@@ -125,12 +125,12 @@ class Tes extends MY_Controller {
         $peserta['t4_lahir'] = ucwords(strtolower($peserta['t4_lahir']));
         $peserta['tahun'] = date('Y', strtotime($tes['tgl_tes']));
         $peserta['bulan'] = getRomawi(date('m', strtotime($tes['tgl_tes'])));
-        $peserta['istima'] = poin("Listening", $peserta['nilai_listening']);
-        $peserta['tarakib'] = poin("Structure", $peserta['nilai_structure']);
-        $peserta['qiroah'] = poin("Reading", $peserta['nilai_reading']);
+        $peserta['istima'] = poin("Listening", $peserta['nilai_listening'], $peserta['versi']);
+        $peserta['tarakib'] = poin("Structure", $peserta['nilai_structure'], $peserta['versi']);
+        $peserta['qiroah'] = poin("Reading", $peserta['nilai_reading'], $peserta['versi']);
         $peserta['tgl_tes'] = $tes['tgl_tes'];
 
-        $skor = ((poin("Listening", $peserta['nilai_listening']) + poin("Structure", $peserta['nilai_structure']) + poin("Reading", $peserta['nilai_reading'])) * 10) / 3;
+        $skor = ((poin("Listening", $peserta['nilai_listening'], $peserta['versi']) + poin("Structure", $peserta['nilai_structure'], $peserta['versi']) + poin("Reading", $peserta['nilai_reading'], $peserta['versi'])) * 10) / 3;
         $peserta['skor'] = $skor;
 
         $skor = round($skor);
@@ -259,12 +259,12 @@ class Tes extends MY_Controller {
                                         ->setCellValue('F' . $kolom, $peserta['no_wa'])
                                         ->setCellValue('G' . $kolom, $peserta['email'])
                                         ->setCellValue('H' . $kolom, $peserta['nilai_listening'])
-                                        ->setCellValue('I' . $kolom, poin("Listening", $peserta['nilai_listening']))
+                                        ->setCellValue('I' . $kolom, poin("Listening", $peserta['nilai_listening'], $peserta['versi']))
                                         ->setCellValue('J' . $kolom, $peserta['nilai_structure'])
-                                        ->setCellValue('K' . $kolom, poin("Structure", $peserta['nilai_structure']))
+                                        ->setCellValue('K' . $kolom, poin("Structure", $peserta['nilai_structure'], $peserta['versi']))
                                         ->setCellValue('L' . $kolom, $peserta['nilai_reading'])
-                                        ->setCellValue('M' . $kolom, poin("Reading", $peserta['nilai_reading']))
-                                        ->setCellValue('N' . $kolom, skor($peserta['nilai_listening'], $peserta['nilai_structure'], $peserta['nilai_reading']));
+                                        ->setCellValue('M' . $kolom, poin("Reading", $peserta['nilai_reading'], $peserta['versi']))
+                                        ->setCellValue('N' . $kolom, skor($peserta['nilai_listening'], $peserta['nilai_structure'], $peserta['nilai_reading'], $peserta['versi']));
             
                             $kolom++;
                             $nomor++;
